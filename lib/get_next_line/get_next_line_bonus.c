@@ -6,80 +6,65 @@
 /*   By: mangarci <mangarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 13:58:19 by mangarci          #+#    #+#             */
-/*   Updated: 2021/11/08 17:51:40 by mangarci         ###   ########.fr       */
+/*   Updated: 2021/11/11 21:28:14 by mangarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-size_t	ft_strlen_gnl(const char *s)
-{
-	unsigned char		*str;
-	size_t				i;
+#include "get_next_line_bonus.h"
 
-	str = (unsigned char *)s;
-	i = 0;
-	if (str[i] == '\0')
-		return (0);
-	while (str[i] != '\0')
-		i++;
-	return (i);
-}
-
-static int	ft_return(int len, char **line)
+int	new_line(char **s, char **line)
 {
-	if (len < 0)
-		return (-1);
-	*line = ft_strdup_gnl("");
-	return (0);
-}
-
-char	*ft_get_line(char *s, char **line, int *len)
-{
+	int		len;
 	char	*aux;
-	int		pos;
 
-	pos = 0;
-	while (s[pos] != '\n' && s[pos] != '\0')
-		pos++;
-	if (s[pos] == '\n')
+	len = 0;
+	while (((*s)[len] != '\n' && (*s)[len] != '\0'))
+		len++;
+	if ((*s)[len] == '\n')
 	{
-		*line = ft_substr_gnl(s, 0, pos);
-		aux = ft_strdup_gnl(s + (pos + 1));
-		free(s);
-		s = aux;
-		if (s[0] == '\0')
-			s = ft_del_gnl(s);
-		*len = 1;
+		*line = ft_substr_gnl(*s, 0, len);
+		aux = ft_strdup_gnl(&((*s)[len + 1]));
+		free(*s);
+		*s = aux;
 	}
 	else
 	{
-		*line = ft_strdup_gnl(s);
-		free(s);
-		s = NULL;
-		*len = 0;
+		*line = ft_strdup_gnl(*s);
+		free(*s);
+		*s = NULL;
+		return (0);
 	}
-	return (s);
+	return (1);
 }
 
-void	file_error(int fd, char **line)
+int	return_value(int fd, int n_bytes, char **s, char **line)
 {
-	if (fd < 0 || !line || BUFF_SIZE < 1)
+	if (n_bytes < 0)
 		return (-1);
+	else if (n_bytes == 0 && s[fd] == '\0')
+	{
+		*line = ft_strdup_gnl("");
+		return (0);
+	}
+	else
+		return (new_line(&s[fd], line));
 }
 
 int	get_next_line(int fd, char **line)
 {
-	static char	*s[4096];
-	int			len;
-	char		buff[BUFF_SIZE + 1];
-	char		*aux;
+	char			buff[BUFFER_SIZE + 1];
+	int				n_bytes;
+	static char		*s[FD_SIZE];
+	char			*aux;
 
-	file_error(fd, line);
-	len = read(fd, buff, BUFF_SIZE);
-	while (len > 0)
+	if (fd < 0 || !line || BUFFER_SIZE < 1)
+		return (-1);
+	n_bytes = read(fd, buff, BUFFER_SIZE);
+	while (n_bytes > 0)
 	{
-		buff[len] = '\0';
+		buff[n_bytes] = '\0';
 		if (s[fd] == NULL)
 			s[fd] = ft_strdup_gnl(buff);
 		else
@@ -90,10 +75,7 @@ int	get_next_line(int fd, char **line)
 		}
 		if (ft_strchr_gnl(s[fd], '\n'))
 			break ;
-		len = read(fd, buff, BUFF_SIZE);
+		n_bytes = read(fd, buff, BUFFER_SIZE);
 	}
-	if ((len < 0) || (len == 0 && s[fd] == '\0'))
-		return (ft_return(len, line));
-	s[fd] = ft_get_line(s[fd], line, &len);
-	return (len);
+	return (return_value(fd, n_bytes, s, line));
 }

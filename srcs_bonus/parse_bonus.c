@@ -6,11 +6,11 @@
 /*   By: mangarci <mangarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 17:32:51 by mangarci          #+#    #+#             */
-/*   Updated: 2021/11/10 22:25:07 by mangarci         ###   ########.fr       */
+/*   Updated: 2021/11/11 19:08:37 by mangarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf_bonus.h"
+#include "../inc/fdf_bonus.h"
 
 int open_map(char *map_name)
 {
@@ -30,7 +30,7 @@ int get_height(char *filename)
 
     height = 0;
     fd = open_map(filename);
-    while (get_next_line(fd, &line));
+    while (get_next_line(fd, &line))
     {
         height++;
         free(line);
@@ -50,7 +50,7 @@ int get_width(char *filename)
     fd = open_map(filename);
     get_next_line(fd, &line);
     buffer = ft_split(line, ' ');
-    width = array_lenght(buffer);
+    width = array_length(buffer);
     free(line);
     free(buffer);
     close(fd);
@@ -64,7 +64,7 @@ void    fill(char *line, int *map_line)
     
     i = 0;
     buffer = ft_split(line, ' ');
-    while (buffer[i]);
+    while (buffer[i])
     {
         map_line[i] = ft_atoi(buffer[i]);
         i++;

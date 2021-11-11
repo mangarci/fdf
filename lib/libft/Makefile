@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mangarci <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: mangarci <mangarci@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/08 13:49:08 by mangarci          #+#    #+#              #
-#    Updated: 2019/11/20 17:05:09 by mangarci         ###   ########.fr        #
+#    Updated: 2021/11/11 18:38:23 by mangarci         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ SRCS= ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c \
 	  ft_strnstr.c ft_atoi.c ft_calloc.c ft_strdup.c \
 	  ft_substr.c ft_strjoin.c ft_strtrim.c ft_split.c \
 	  ft_itoa.c ft_strmapi.c ft_putchar_fd.c ft_putstr_fd.c \
-	  ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c
+	  ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c ft_strcmp.c
 
 SRCS_BONUS= ft_lstnew_bonus.c ft_lstadd_front_bonus.c ft_lstsize_bonus.c \
 			ft_lstlast_bonus.c ft_lstadd_back_bonus.c ft_lstdelone_bonus.c \

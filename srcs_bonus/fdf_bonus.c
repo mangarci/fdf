@@ -6,13 +6,13 @@
 /*   By: mangarci <mangarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 17:03:03 by mangarci          #+#    #+#             */
-/*   Updated: 2021/11/10 22:30:08 by mangarci         ###   ########.fr       */
+/*   Updated: 2021/11/11 19:06:21 by mangarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf_bonus.h"
+#include "../inc/fdf_bonus.h"
 
-int array_length(void **array)
+int array_length(char **array)
 {
     int i;
 
@@ -27,11 +27,11 @@ int array_length(void **array)
 void    cam_mov(int keycode, t_fdf *data)
 {
     if (keycode == K_LEFT)
-        data->cam.rotate[0];
+        data->cam.rotate[0] = 1;
     if (keycode == K_RIGHT)
-        data->cam.rotate[1];
+        data->cam.rotate[1] = 1;
     if (keycode == K_UP)
-        data->cam.rotate[2];
+        data->cam.rotate[2] = 1;
     if (keycode == K_DOWN)
     {
         data->cam.rotate[0] = 0;
@@ -64,4 +64,7 @@ int main(int argc, char **argv)
     data->map = parse_map(argv[1]);
     data->cam = init_cam(data);
     data->mlx = create_window();
+    display_img(data);
+    hook_loop(data);
+    return (0);
 }

@@ -6,11 +6,11 @@
 /*   By: mangarci <mangarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 17:52:05 by mangarci          #+#    #+#             */
-/*   Updated: 2021/11/10 22:24:54 by mangarci         ###   ########.fr       */
+/*   Updated: 2021/11/11 19:27:54 by mangarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf_bonus.h"
+#include "../inc/fdf_bonus.h"
 
 int zoom(int size)
 {
@@ -21,12 +21,13 @@ int zoom(int size)
     else if (size < 150)
         return (ZOOM/4);
     else
-        return (2);
+        return (1);
 }
 
 t_cam   init_cam(t_fdf *data)
 {
     t_cam   cam;
+    
     data->map.range = range(data);
     cam.angle = 0.1;
     cam.perspective_angle = 0.53;

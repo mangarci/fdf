@@ -6,11 +6,11 @@
 /*   By: mangarci <mangarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 19:28:00 by mangarci          #+#    #+#             */
-/*   Updated: 2021/11/10 22:35:15 by mangarci         ###   ########.fr       */
+/*   Updated: 2021/11/11 21:06:50 by mangarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf_bonus.h"
+#include "../inc/fdf_bonus.h"
 
 int double_free(char **array)
 {
@@ -57,7 +57,7 @@ t_range range(t_fdf *data)
 int	key_action(int keycode, t_fdf *data)
 {
 	if (keycode == K_ESC)
-		end(&data->mlx);
+		close_window(&data->mlx);
 	if (keycode == K_W)
 		data->cam.pos_y -= 20;
 	if (keycode == K_A)
@@ -66,27 +66,8 @@ int	key_action(int keycode, t_fdf *data)
 		data->cam.pos_x += 20;
 	if (keycode == K_S)
 		data->cam.pos_y += 20;
-	if (keycode == K_I)
-	{
-		data->cam.isometric = 1;
-		data->cam.plane = 0;
-		data->cam.oblique = 0;
-		data->cam.perspective_angle = 0.53;
-	}
-	if (keycode == K_P)
-	{
-		data->cam.plane = 1;
-		data->cam.isometric = 0;
-		data->cam.oblique = 0;
-	}
-	if (keycode == K_O)
-	{
-		data->cam.plane = 0;
-		data->cam.isometric = 0;
-		data->cam.oblique = 1;
-		data->cam.perspective_angle = 0.2;
-	}
-	rotation(keycode, data);
+	hooks_perspective(data, keycode);
+	cam_mov(keycode, data);
 	new_image(data);
 	return (0);
 }
@@ -101,5 +82,6 @@ void    hook_loop(t_fdf *data)
 {
     mlx_key_hook(data->mlx.window, key_action, data);
     mlx_hook(data->mlx.window, 17, (1L << 17), close_x, &data->mlx);
+    mlx_mouse_hook(data->mlx.window, zoom_bonus, data);
     mlx_loop(data->mlx.ptr);
 }

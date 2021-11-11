@@ -6,99 +6,113 @@
 /*   By: mangarci <mangarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 15:11:25 by mangarci          #+#    #+#             */
-/*   Updated: 2021/11/08 17:43:18 by mangarci         ###   ########.fr       */
+/*   Updated: 2021/11/11 21:28:37 by mangarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
+#include "get_next_line_bonus.h"
+
+size_t	ft_strlen_gnl(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		i++;
+	}
+	return (i);
+}
+
 char	*ft_strdup_gnl(char *s1)
 {
-	char	*str;
+	char	*s2;
 	int		i;
+	int		size;
 
+	size = ft_strlen_gnl(s1);
 	i = 0;
-	str = malloc(sizeof(char) * (ft_strlen_gnl(s1) + 1));
-	if (!str)
-		return (NULL);
-	while (s1[i] != '\0')
+	s2 = (char *)malloc(sizeof(char) * size + 1);
+	if (s2 == NULL)
 	{
-		str[i] = s1[i];
+		return (s2);
+	}
+	while (i <= size)
+	{
+		s2[i] = s1[i];
 		i++;
 	}
-	str[i] = '\0';
-	return (str);
+	return (s2);
 }
 
-char	*ft_strjoin_gnl(char const *s1, char const *s2)
+char	*ft_substr_gnl(char *s, unsigned int start, size_t len)
 {
-	char	*dst;
 	size_t	i;
+	char	*substr;
 
 	i = 0;
+	if (!s)
+	{
+		return (NULL);
+	}
+	if (ft_strlen_gnl(s) < start)
+		return (ft_strdup_gnl(""));
+	substr = (char *)malloc(sizeof(char) * (len + 1));
+	if (substr == NULL)
+		return (substr);
+	while (s[i] && i < len)
+	{
+		substr[i] = s[start + i];
+		i++;
+	}
+	substr[i] = '\0';
+	return (substr);
+}
+
+char	*ft_strchr_gnl(char *s, int c)
+{
+	while (*s)
+	{
+		if (*s == c)
+		{
+			return ((char *)s);
+		}
+		s++;
+	}
+	if (c == '\0')
+	{
+		return ((char *)s);
+	}
+	return (NULL);
+}
+
+char	*ft_strjoin_gnl(char *s1, char *s2)
+{
+	int		i;
+	int		j;
+	char	*strjoin;
+
 	if (!s1 || !s2)
 		return (NULL);
-	dst = malloc(sizeof(*dst) * (ft_strlen_gnl(s1) + ft_strlen_gnl(s2) + 1));
-	if (!dst)
-		return (NULL);
-	while (*s1 != '\0')
-		dst[i++] = *s1++;
-	while (*s2 != '\0')
-		dst[i++] = *s2++;
-	dst[i] = '\0';
-	return (dst);
-}
-
-char	*ft_substr_gnl(char const *s, unsigned int start, size_t len)
-{
-	size_t	i;
-	char	*str;
-	size_t	j;
-
+	i = ft_strlen_gnl(s1);
+	j = ft_strlen_gnl(s2);
+	strjoin = (char *)malloc(sizeof(char) * (i + j + 1));
+	if (strjoin == NULL)
+		return (strjoin);
+	i = 0;
 	j = 0;
-	while (s[j] != '\0')
-		j++;
-	i = 0;
-	str = malloc(sizeof(char) * (len + 1));
-	if (!str || !s)
-		return (NULL);
-	if (start < j)
+	while (s1[i])
 	{
-		while (s[start] && i < len)
-		{
-			str[i] = s[start];
-			start++;
-			i++;
-		}
-	}
-	str[i] = '\0';
-	return (str);
-}
-
-void	*ft_del_gnl(char *s)
-{
-	if (s)
-	{
-		free(s);
-		s = NULL;
-	}
-	return (s);
-}
-
-char	*ft_strchr_gnl(const char *s, int c)
-{
-	int		i;
-	char	*aux;
-
-	i = 0;
-	aux = (char *)s;
-	while (aux[i])
-	{
-		if (aux[i] == c)
-			return (&aux[i]);
+		strjoin[i] = s1[i];
 		i++;
 	}
-	if (aux[i] == '\0' && c == '\0')
-		return (&aux[i]);
-	return (NULL);
+	while (s2[j])
+	{
+		strjoin[i + j] = s2[j];
+		j++;
+	}
+	strjoin[i + j] = '\0';
+	return (strjoin);
 }

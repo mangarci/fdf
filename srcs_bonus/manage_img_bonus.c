@@ -6,11 +6,11 @@
 /*   By: mangarci <mangarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 19:14:24 by mangarci          #+#    #+#             */
-/*   Updated: 2021/11/10 22:25:03 by mangarci         ###   ########.fr       */
+/*   Updated: 2021/11/11 21:13:20 by mangarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf_bonus.h"
+#include "../inc/fdf_bonus.h"
 
 int set_color(int x, int y, t_map map, t_range r)
 {
@@ -41,24 +41,29 @@ void    mine_mlx_pixel_put(t_fdf *data, int x, int y)
     if (x >= SIZE_X || x < 0 || y >= SIZE_Y || y < 0)
         return ;
     dst = data->mlx.img.data + (y * data->mlx.img.size_line + x * (data->mlx.img.bbp / 8));
+    *(unsigned int *)dst = data->mlx.color;
 }
 
 void    display_img(t_fdf *data)
 {
-    int y;
-    int x;
+	t_point	p;
 
-    y = 0;
-    while (y < data->map.width)
-    {
-        data->mlx.color = set_color(x, y, data->map, data->map.range);
-        if (x < data->map.width - 1)
-            plotline(x, y, x + 1, y, data);
-        if (y < data->map.height - 1)
-            plotline(x, y, x, y + 1, data);
-        x++;
-    }
-    y++;
-    mlx_put_image_to_window(data->mlx.ptr, data->mlx.window, data->mlx.img.ptr, 0 ,0);
-    put_controls(data->mlx);
+	p.y = 0;
+	while (p.y < data->map.height)
+	{
+		p.x = 0;
+		while (p.x < data->map.width)
+		{
+			data->mlx.color = set_color(p.x, p.y, data->map, data->map.range);
+			if (p.x < data->map.width - 1)
+				plotline(p, p.x + 1, p.y, data);
+			if (p.y < data->map.height - 1)
+				plotline(p, p.x, p.y + 1, data);
+			p.x++;
+		}
+		p.y++;
+	}
+	mlx_put_image_to_window(data->mlx.ptr, data->mlx.window,
+		data->mlx.img.ptr, 0, 0);
+	put_controls(data->mlx);
 }

@@ -1,39 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.c                                              :+:      :+:    :+:   */
+/*   img_settings.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mangarci <mangarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/10 17:03:03 by mangarci          #+#    #+#             */
-/*   Updated: 2021/11/11 21:32:23 by mangarci         ###   ########.fr       */
+/*   Created: 2021/11/11 21:16:32 by mangarci          #+#    #+#             */
+/*   Updated: 2021/11/11 21:32:45 by mangarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/fdf.h"
 
-int	array_length(char **array)
+void	perform_zoom(t_point *p0, t_point *p1, int z[2], t_fdf *data)
 {
-	int	i;
-
-	i = 0;
-	if (!array)
-		return (-1);
-	while (array[i])
-		i++;
-	return (i);
+	p0->x *= data->cam.zoom;
+	p0->y *= data->cam.zoom;
+	p1->x *= data->cam.zoom;
+	p1->y *= data->cam.zoom;
+	z[0] *= data->cam.zoom / 2;
+	z[1] *= data->cam.zoom / 2;
 }
 
-int	main(int argc, char **argv)
+void	perform_position(t_point *p0, t_point *p1, t_fdf *data)
 {
-	t_fdf	*data;
-
-	data = (t_fdf *)malloc(sizeof(t_fdf));
-	manage_errors(argc, argv);
-	data->map = parse_map(argv[1]);
-	data->cam = init_cam(data);
-	data->mlx = create_window();
-	display_img(data);
-	hook_loop(data);
-	return (0);
+	p0->x += data->cam.pos_x;
+	p0->y += data->cam.pos_y;
+	p1->x += data->cam.pos_x;
+	p1->y += data->cam.pos_y;
 }

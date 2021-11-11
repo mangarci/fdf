@@ -6,11 +6,11 @@
 /*   By: mangarci <mangarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 22:24:06 by mangarci          #+#    #+#             */
-/*   Updated: 2021/11/10 22:25:13 by mangarci         ###   ########.fr       */
+/*   Updated: 2021/11/11 16:41:23 by mangarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf_bonus.h"
+#include "../inc/fdf_bonus.h"
 
 void	x_rotation(int *y, int *z, double angle)
 {

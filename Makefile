@@ -6,13 +6,13 @@
 #    By: mangarci <mangarci@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/09 10:18:07 by mangarci          #+#    #+#              #
-#    Updated: 2021/11/09 10:35:21 by mangarci         ###   ########.fr        #
+#    Updated: 2021/11/11 17:49:43 by mangarci         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fdf
 CC = gcc
-#CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra
 LM = -lm 
 RM = rm -rfv
 DEBUG_FLAG = -g 
@@ -22,10 +22,12 @@ BONUS_DIR = srcs_bonus/
 SRCS_BONUS = $(wildcard $(BONUS_DIR)*.c)
 OBJS = $(SRCS:%.c=%.o)
 OBJS_BONUS = $(SRCS_BONUS:%.c=%.o)
-LIBFT_PATH = lib/libft 
-LIBFT_LIB = -L$(LIBFT_PATH) $(LIBFT_PATH)/libft.a
+LIBFT_PATH = lib/libft
+LIBFT_LIB:= -L$(LIBFT_PATH) $(LIBFT_PATH)/libft.a
 GNL = lib/get_next_line/*.c 
 MINILIBX = -lmlx -framework OpenGL -framework AppKit
+
+
 
 all:	libft $(NAME)
 
@@ -37,7 +39,7 @@ $(%.o): $(%.c)
 				@echo "Creating objects"
 
 bonus:	libft $(OBJS_BONUS)
-		$(CC) $(CFLAGS) $(GNL) $(OBJS_BONUS) -o $(NAME) $(MINILIBX) $(LM) $(LIBFT_LIB)
+		$(CC) $(CFLAGS) $(GNL) $(OBJS_BONUS) -o $(NAME) $(LM) $(LIBFT_LIB) $(MINILIBX)
 
 libft:
 				make -C $(LIBFT_PATH)
