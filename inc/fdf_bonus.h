@@ -6,7 +6,7 @@
 /*   By: mangarci <mangarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 22:25:48 by mangarci          #+#    #+#             */
-/*   Updated: 2021/11/11 21:26:57 by mangarci         ###   ########.fr       */
+/*   Updated: 2021/11/12 17:34:27 by mangarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 # define ZOOM 30
 # define SIZE_X 1600
 # define SIZE_Y 1200
+# define WHI 0xffffff
+# define GRE 0x00ff00
 
 typedef struct t_cam
 {

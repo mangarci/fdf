@@ -6,13 +6,13 @@
 #    By: mangarci <mangarci@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/09 10:18:07 by mangarci          #+#    #+#              #
-#    Updated: 2021/11/11 17:49:43 by mangarci         ###   ########.fr        #
+#    Updated: 2021/11/12 17:54:23 by mangarci         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fdf
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -fsanitize=address
 LM = -lm 
 RM = rm -rfv
 DEBUG_FLAG = -g 
